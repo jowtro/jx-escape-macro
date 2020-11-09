@@ -6,14 +6,15 @@ import tkinter as tk
 from tkinter import Label, Button, StringVar
 from classes.interval import Interval
 from classes.mining import Mining
+from playsound import playsound
+
 root = tk.Tk(className='escape from boredom - v01')
 root.geometry("200x200")
 
 button = tk.Button(root, text="I am a button")
 
 mining = Mining("Mining", rock=[1803, 469])
-mining.set_MAX_ITERATIONS(9)
-INTERVAL_TIME = 120
+INTERVAL_TIME = 20
 
 
 def has_found_img(pos):
@@ -35,22 +36,19 @@ def show_next_cycle():
 @Interval(interval=INTERVAL_TIME)
 def main_loop():
     if mining.metal_box_found:
-        Mining.go_click(
-            mining.orebox[0], mining.orebox[1], 2, pyautogui.easeInBack)
-        # TODO BURST XP
-        mining.look_for_bonus_xp()
-        sleep(2)
-        Mining.go_click(mining.rock[0], mining.rock[1],
-                        2, pyautogui.easeInBounce)
+        mining.mine()
         mining.add_iterations(1)
     else:
         msg.set(f"Can't proceed without a orebox !")
         mining.set_iterations(9)
+        playsound('./assets/456962__funwithsound__failure-drum-sound-effect-1.mp3')
     set_next_cycle()
 
 
-def mine():
+def mine(cycles=9):
     set_next_cycle()
+    mining.set_iterations(0)
+    mining.set_MAX_ITERATIONS(cycles)
     while mining.get_iterations() < mining.get_MAX_ITERATIONS():
         main_loop()
         msg.set(f'Status: Running...\n Nº iterations {mining.get_iterations()}')
@@ -60,9 +58,12 @@ def mine():
     app_status.set(f'Script ended.')
 
 if __name__ == "__main__":
+    playsound('./assets/391539__mativve__electro-win-sound.wav')
     mining.find_and_set_orebox()
-    start_button = Button(root, text="Start Mining", command=mine)
+    start_button = Button(root, text="Mine Runite", command=lambda: mine(50))
     start_button.pack()
+    start_button2 = Button(root, text="Mine lower ores", command=lambda: mine(25))
+    start_button2.pack()
     msg = StringVar()
     msg.set(f'Script started.')
 

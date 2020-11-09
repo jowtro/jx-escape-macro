@@ -15,6 +15,13 @@ class Mining(Action):
             "./assets/xp_burst2.png", "./assets/xp_burst.png"]
         self.image_found = False
 
+    def mine(self):
+        Mining.go_click(self.orebox[0], self.orebox[1],0.8, pyautogui.easeInBack)
+        # TODO BURST XP
+        #self.look_for_bonus_xp()
+        sleep(2)
+        Mining.go_click(self.rock[0], self.rock[1],0.8, pyautogui.easeInBounce)
+
     def find_and_set_orebox(self):
         pos = super().find_image("./assets/rune_ore_chest.png")
         # has found
@@ -33,6 +40,6 @@ class Mining(Action):
                 self.image_found = True
                 sleep(1)
                 super().go_click(pos_xp[0], pos_xp[1],
-                                 2, pyautogui.easeInBounce)
+                                 0.2, pyautogui.easeInBounce)
             else:
                 self.image_found = False

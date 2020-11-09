@@ -10,7 +10,7 @@ class Interval(object):
             interval (int, optional): interval on which the function will be called in seconds. Defaults to 120.
         """
         self.interval = interval
-        self.time_to_act = datetime.now() + timedelta(0, interval)
+        self.time_to_act = datetime.now() - timedelta(0, self.interval )
 
     def __call__(self, func):
         # Will only execute the function if time has passed
