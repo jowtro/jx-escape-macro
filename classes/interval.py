@@ -17,6 +17,6 @@ class Interval(object):
         def wrapper(*args, **kwargs):
             if self.time_to_act < datetime.now():
                 self.time_to_act = datetime.now() + timedelta(0, self.interval )
-                print(f"DEBUG: macro tick set to next {self.interval} s")
+                #print(f"DEBUG: macro tick set to next {self.interval} s")
                 return func(*args, **kwargs)
         return wrapper

@@ -16,16 +16,18 @@ class Mining(Action):
         self.image_found = False
 
     def mine(self):
-        Mining.go_click(self.orebox[0], self.orebox[1],0.8, pyautogui.easeInBack)
+        Mining.go_click(self.orebox[0], self.orebox[1],
+                        0.8, pyautogui.easeInBack)
         # TODO BURST XP
-        #self.look_for_bonus_xp()
+        # self.look_for_bonus_xp()
         sleep(2)
-        Mining.go_click(self.rock[0], self.rock[1],0.8, pyautogui.easeInBounce)
+        Mining.go_click(self.rock[0], self.rock[1],
+                        0.8, pyautogui.easeInBounce)
 
     def find_and_set_orebox(self):
         pos = super().find_image("./assets/rune_ore_chest.png")
         # has found
-        if pos[0] != -1:
+        if pos is not None and pos[0] != -1:
             self.orebox[0] = pos[0] + 30
             self.orebox[1] = pos[1] + 15
             self.metal_box_found = True
